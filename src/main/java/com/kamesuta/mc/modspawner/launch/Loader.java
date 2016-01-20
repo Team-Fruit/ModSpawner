@@ -1,0 +1,130 @@
+package com.kamesuta.mc.modspawner.launch;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InterruptedIOException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import com.kamesuta.mc.modspawner.launch.DLCalculate.DLDetails;
+import com.kamesuta.mc.modspawner.launch.DownloadMonitor.IDownloadCloser;
+import com.kamesuta.mc.modspawner.launch.DownloadMonitor.IDownloadProgress;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
+import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
+
+public class Loader {
+	// private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 <<
+	// 23);
+	private static final String owner = "ModSpawner";
+	private static final LogManager logger = LogManager.getLogger(owner);
+
+	private File modsDir;
+	private DLGui gui;
+
+	public Loader() {
+		gui = new DLGui();
+		gui.makeGUI();
+
+		// File mcDir = (File) FMLInjectionData.data()[6];
+		File mcDir = new File("./");
+
+		modsDir = new File(mcDir, "mods");
+	}
+
+	private void download(String url) {
+		try {
+			URL libDownload = new URL(url);
+			// downloadMonitor .updateProgressString("Downloading file %s",
+			// libDownload.toString());
+			logger.info("Downloading file " + libDownload.toString());
+			URLConnection connection = libDownload.openConnection();
+			connection.setConnectTimeout(5000);
+			connection.setReadTimeout(5000);
+			connection.setRequestProperty("User-Agent", "" + owner + " Downloader");
+			download(connection.getInputStream(), connection.getContentLength());
+			// downloadMonitor.updateProgressString("Download complete");
+			logger.info("Download complete");
+		} catch (Exception e) {
+			installError(e, "download");
+		}
+	}
+
+	private void installError(Exception e, String s) {
+		DownloadMonitor.IDownloadCloser closer = gui.getCalculate();
+		if (closer.shouldStopIt()) {
+			logger.error("You have stopped the " + s + " before it could complete");
+			MdspCorePlugin.exit(1);
+		}
+		// closer.showErrorDialog(dep.file.filename, dep.repo + '/' +
+		// dep.file.filename);
+		throw new RuntimeException(s + " error", e);
+	}
+
+	private void download(InputStream is, int sizeGuess) throws Exception {
+		File target = new File(modsDir, "newFile.png");
+
+		int read, fullLength = 0;
+
+		IDownloadProgress progress = gui.getCalculate().progressOne;
+		IDownloadCloser closer = gui.getCalculate();
+		DLDetails details = gui.getCalculate().details;
+		progress.updateGuess(sizeGuess);
+
+		if (!target.exists())
+			target.createNewFile();
+		BufferedOutputStream fos = new BufferedOutputStream(new FileOutputStream(target));
+		try {
+			closer.setPokeThread(Thread.currentThread());
+			byte[] buffer = new byte[1024];
+			while ((read = is.read(buffer)) >= 0) {
+				fos.write(buffer, 0, read);
+				;
+				fullLength += read;
+
+				if (closer.shouldStopIt())
+					break;
+
+				details.countUp(read);
+				progress.updateProgress(fullLength);
+			}
+			is.close();
+			closer.setPokeThread(null);
+		} catch (InterruptedIOException e) {
+			// We were interrupted by the stop button. We're stopping now..
+			// clear interruption flag.
+			Thread.interrupted();
+			throw new Exception("Stop");
+		} finally {
+			fos.close();
+		}
+
+	}
+
+	public static void main(String[] args) {
+		new Loader().download("http://k54.offliberty.com/P_ZafsauELQ.mp4");
+		// new Loader().download("http://auth.kamesuta.com/image/letsPlay.png");
+	}
+}
+
+class LogManager {
+	String owner;
+	
+	public LogManager(String owner) {
+		this.owner = owner;
+	}
+	
+	public void info(String log) {
+		System.out.println(String.format("[INFO][%s]%s", owner, log));
+	}
+
+	public void error(String log) {
+		System.out.println(String.format("[ERROR][%s]%s", owner, log));
+	}
+
+	public static LogManager getLogger(String owner) {
+		return new LogManager(owner);
+	}
+}
