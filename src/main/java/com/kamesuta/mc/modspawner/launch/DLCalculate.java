@@ -7,9 +7,9 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
-import com.kamesuta.mc.modspawner.launch.DownloadMonitor.DLDetailsGraph;
-import com.kamesuta.mc.modspawner.launch.DownloadMonitor.IDownloadCloser;
-import com.kamesuta.mc.modspawner.launch.DownloadMonitor.IDownloadProgress;
+import com.kamesuta.mc.modspawner.gui.DLDetailsGraph;
+import com.kamesuta.mc.modspawner.gui.DownloadMonitor.IDownloadCloser;
+import com.kamesuta.mc.modspawner.gui.DownloadMonitor.IDownloadProgress;
 
 public class DLCalculate implements IDownloadCloser
 {
@@ -120,13 +120,13 @@ public class DLCalculate implements IDownloadCloser
 			double speed = NANOS_PER_SECOND * count / time;
 			oldCount = newCount;
 			oldTime = newTime;
-			
+
 			if (detailsGraph != null)
 			{
 				detailsGraph.addObj((int)speed);
 			}
-			
-			
+
+
 			tm.start();
 		}
 	}

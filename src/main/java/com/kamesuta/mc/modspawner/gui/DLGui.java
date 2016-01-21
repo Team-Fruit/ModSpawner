@@ -1,4 +1,4 @@
-package com.kamesuta.mc.modspawner.launch;
+package com.kamesuta.mc.modspawner.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +19,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import com.kamesuta.mc.modspawner.launch.DLCalculate;
 
 public class DLGui {
 
@@ -86,7 +88,7 @@ public class DLGui {
 		panel.setForeground(new Color(32, 43, 54));
 		panel.setBackground(new Color(86, 84, 102));
 
-				DownloadMonitor.DLDetailsGraph panelDetails = new DownloadMonitor.DLDetailsGraph();
+				DLDetailsGraph panelDetails = new DLDetailsGraph();
 				panelDetails.setForeground(Color.LIGHT_GRAY);
 				panelDetails.setOpaque(false);
 				cal.details.setDetailsGraph(panelDetails);

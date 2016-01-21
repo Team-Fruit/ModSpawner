@@ -1,23 +1,18 @@
-package com.kamesuta.mc.modspawner.launch;
+package com.kamesuta.mc.modspawner.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTextArea;
 
 public class DownloadMonitor {
 	public static final String displayName = "Mod Spawner";
@@ -133,98 +128,4 @@ public class DownloadMonitor {
 		}
 	}
 
-	public static class DLDetailsGraph extends JPanel {
-		public static final int objwidth = 5;
-		public static final int objspace = 2;
-
-		private List<Integer> objects = new ArrayList<Integer>();
-
-		@Override
-		public void paintComponent(Graphics graphics) {
-			super.paintComponent(graphics);
-
-			Graphics2D g = (Graphics2D) graphics;
-
-			int width = this.getWidth();
-			int height = this.getHeight();
-
-			Color f = this.getForeground();
-			g.setColor(f);
-
-			if (!objects.isEmpty()) {
-				int max = DLSize.getMeasure(Collections.max(objects));
-
-				FontMetrics fm = g.getFontMetrics();
-				g.drawString(DLSize.getFormatSizeString(max, "bps"), 0, fm.getAscent());
-				g.drawString("0", 0, height - (fm.getHeight() - fm.getAscent()));
-
-				for (int i = 0; i < objects.size(); i++) {
-					if ((objwidth + objspace) * i < width) {
-						int objlength = objects.get(i) * height / max;
-						g.fillRect(width - ((objwidth + objspace) * (objects.size() - i)), height - objlength, objwidth,
-								objlength);
-					} else {
-						objects.remove(0);
-						break;
-					}
-				}
-			}
-		}
-
-		public void addObj(int size) {
-			objects.add(size);
-			repaint();
-		}
-	}
-
-	public static class DLDetailsText extends JTextArea {
-
-		String server = "";
-		String speed = "";
-		String timeremaining = "";
-		String timeremainingAll = "";
-		String status = "";
-
-		public void updateDetails(String key, String value)
-		{
-			this.setText(new StringBuilder()
-			.append(server)
-			.append("速度 : " + speed)
-			.append("現在のダウンロードの推定残り時間 : " + timeremaining)
-			.append("すべてのダウンロードの推定残り時間 : " + timeremainingAll)
-			.append(status).toString()
-			);
-		}
-	}
-
-	public static class DLSize {
-		private static int p = 1024;
-		private static int q = 2;
-
-		public static String getFormatSizeString(float size, String unit) {
-			// Return null string when size is zero.
-			if (size == 0) return "";
-
-			String[] suffix = { "", "K", "M", "G", "T", "P", "E", "Z", "Y" };
-			int index = 0;
-
-			while (size >= p) {
-				size /= p;
-				index++;
-			}
-
-			return String.format("%s%s%s", Integer.toString((int) size), (index < suffix.length ? suffix[index] : "-"), unit);
-		}
-
-		public static int getMeasure(float size) {
-			int index = 0;
-
-			while (size >= q) {
-				size /= q;
-				index++;
-			}
-
-			return (int) Math.pow(q, index + 1);
-		}
-	}
 }
