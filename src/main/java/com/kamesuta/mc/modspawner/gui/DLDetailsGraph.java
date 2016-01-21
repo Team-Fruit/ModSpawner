@@ -29,10 +29,10 @@ public class DLDetailsGraph extends JPanel {
 		g.setColor(f);
 
 		if (!objects.isEmpty()) {
-			int max = DLSize.getMeasure(Collections.max(objects));
+			int max = DLSize.SPEED.getMeasure(Collections.max(objects));
 
 			FontMetrics fm = g.getFontMetrics();
-			g.drawString(DLSize.getFormatSizeString(max, "bps"), 0, fm.getAscent());
+			g.drawString(DLSize.SPEED.getFormatSizeString(max, "bps"), 0, fm.getAscent());
 			g.drawString("0", 0, height - (fm.getHeight() - fm.getAscent()));
 
 			for (int i = 0; i < objects.size(); i++) {
