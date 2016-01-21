@@ -20,8 +20,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.kamesuta.mc.modspawner.launch.DLCalculate;
-
 public class DLGui {
 	/**
 	 * 表示する名前

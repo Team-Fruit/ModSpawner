@@ -1,4 +1,4 @@
-package com.kamesuta.mc.modspawner.launch;
+package com.kamesuta.mc.modspawner.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,10 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
-
-import com.kamesuta.mc.modspawner.gui.DLDetailsGraph;
-import com.kamesuta.mc.modspawner.gui.IDownloadCloser;
-import com.kamesuta.mc.modspawner.gui.IDownloadProgress;
 
 public class DLCalculate implements IDownloadCloser
 {

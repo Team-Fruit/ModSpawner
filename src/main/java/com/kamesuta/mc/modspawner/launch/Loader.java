@@ -14,7 +14,7 @@ import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
 import com.kamesuta.mc.modspawner.gui.DLGui;
 import com.kamesuta.mc.modspawner.gui.IDownloadCloser;
 import com.kamesuta.mc.modspawner.gui.IDownloadProgress;
-import com.kamesuta.mc.modspawner.launch.DLCalculate.DLDetails;
+import com.kamesuta.mc.modspawner.gui.DLCalculate.DLDetails;
 
 public class Loader {
 	// private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 <<
