@@ -83,7 +83,7 @@ public class DLGui {
 		frame.setTitle(DownloadMonitor.displayName);
 		frame.setResizable(true);
 
-		JPanel panel = new DownloadMonitor.DLBackground();
+		JPanel panel = new DLBackground();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setForeground(new Color(32, 43, 54));
 		panel.setBackground(new Color(86, 84, 102));
