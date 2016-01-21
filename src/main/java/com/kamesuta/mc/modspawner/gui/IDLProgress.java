@@ -6,7 +6,7 @@ import javax.swing.JProgressBar;
  * ダウンロード進行をコントロールします
  * @author Kamesuta
  */
-public interface IDownloadProgress {
+public interface IDLProgress {
 	/**
 	 * 進行バーオブジェクトをセットします
 	 * @param p

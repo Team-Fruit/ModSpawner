@@ -7,7 +7,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 
-public class DLCalculate implements IDownloadCloser
+public class DLCalculate implements IDLCloser
 {
 	private Thread pokeThread;
 	private boolean stopIt = false;
@@ -29,10 +29,10 @@ public class DLCalculate implements IDownloadCloser
 		return stopIt;
 	}
 
-	public final IDownloadProgress progressAll = new DLProgress();
-	public final IDownloadProgress progressOne = new DLProgress();
+	public final IDLProgress progressAll = new DLProgress();
+	public final IDLProgress progressOne = new DLProgress();
 
-	private static class DLProgress implements IDownloadProgress
+	private static class DLProgress implements IDLProgress
 	{
 		private JProgressBar progress;
 

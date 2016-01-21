@@ -12,8 +12,8 @@ import java.net.URLConnection;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
 import com.kamesuta.mc.modspawner.gui.DLGui;
-import com.kamesuta.mc.modspawner.gui.IDownloadCloser;
-import com.kamesuta.mc.modspawner.gui.IDownloadProgress;
+import com.kamesuta.mc.modspawner.gui.IDLCloser;
+import com.kamesuta.mc.modspawner.gui.IDLProgress;
 import com.kamesuta.mc.modspawner.gui.DLCalculate.DLDetails;
 
 public class Loader {
@@ -54,7 +54,7 @@ public class Loader {
 	}
 
 	private void installError(Exception e, String s) {
-		IDownloadCloser closer = gui.getCalculate();
+		IDLCloser closer = gui.getCalculate();
 		if (closer.shouldStopIt()) {
 			logger.error("You have stopped the " + s + " before it could complete");
 			MdspCorePlugin.exit(1);
@@ -69,8 +69,8 @@ public class Loader {
 
 		int read, fullLength = 0;
 
-		IDownloadProgress progress = gui.getCalculate().progressOne;
-		IDownloadCloser closer = gui.getCalculate();
+		IDLProgress progress = gui.getCalculate().progressOne;
+		IDLCloser closer = gui.getCalculate();
 		DLDetails details = gui.getCalculate().details;
 		progress.updateGuess(sizeGuess);
 
