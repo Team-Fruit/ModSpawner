@@ -8,12 +8,12 @@ import java.io.InterruptedIOException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.kamesuta.mc.modspawner.launch.DLCalculate.DLDetails;
-import com.kamesuta.mc.modspawner.launch.DownloadMonitor.IDownloadCloser;
-import com.kamesuta.mc.modspawner.launch.DownloadMonitor.IDownloadProgress;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
+import com.kamesuta.mc.modspawner.launch.DLCalculate.DLDetails;
+import com.kamesuta.mc.modspawner.launch.DownloadMonitor.IDownloadCloser;
+import com.kamesuta.mc.modspawner.launch.DownloadMonitor.IDownloadProgress;
 
 public class Loader {
 	// private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 <<
@@ -121,7 +121,7 @@ class LogManager {
 	}
 
 	public void error(String log) {
-		System.out.println(String.format("[ERROR][%s]%s", owner, log));
+		System.err.println(String.format("[ERROR][%s]%s", owner, log));
 	}
 
 	public static LogManager getLogger(String owner) {
