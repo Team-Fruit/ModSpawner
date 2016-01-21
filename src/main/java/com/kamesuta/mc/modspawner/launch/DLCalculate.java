@@ -8,8 +8,8 @@ import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 import com.kamesuta.mc.modspawner.gui.DLDetailsGraph;
-import com.kamesuta.mc.modspawner.gui.DownloadMonitor.IDownloadProgress;
 import com.kamesuta.mc.modspawner.gui.IDownloadCloser;
+import com.kamesuta.mc.modspawner.gui.IDownloadProgress;
 
 public class DLCalculate implements IDownloadCloser
 {

@@ -23,6 +23,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import com.kamesuta.mc.modspawner.launch.DLCalculate;
 
 public class DLGui {
+	/**
+	 * 表示する名前
+	 */
+	public static final String displayName = "Mod Spawner";
 
 	private JFrame frame;
 	private DLCalculate cal = new DLCalculate();
@@ -80,7 +84,7 @@ public class DLGui {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		frame.setTitle(DownloadMonitor.displayName);
+		frame.setTitle(displayName);
 		frame.setResizable(true);
 
 		JPanel panel = new DLBackground();

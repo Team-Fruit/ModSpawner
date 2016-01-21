@@ -12,8 +12,8 @@ import java.net.URLConnection;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
 import com.kamesuta.mc.modspawner.gui.DLGui;
-import com.kamesuta.mc.modspawner.gui.DownloadMonitor.IDownloadProgress;
 import com.kamesuta.mc.modspawner.gui.IDownloadCloser;
+import com.kamesuta.mc.modspawner.gui.IDownloadProgress;
 import com.kamesuta.mc.modspawner.launch.DLCalculate.DLDetails;
 
 public class Loader {
