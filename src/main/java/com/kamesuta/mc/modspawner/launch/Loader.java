@@ -12,9 +12,8 @@ import java.net.URLConnection;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
 import com.kamesuta.mc.modspawner.gui.DLGui;
-import com.kamesuta.mc.modspawner.gui.DownloadMonitor;
-import com.kamesuta.mc.modspawner.gui.DownloadMonitor.IDownloadCloser;
 import com.kamesuta.mc.modspawner.gui.DownloadMonitor.IDownloadProgress;
+import com.kamesuta.mc.modspawner.gui.IDownloadCloser;
 import com.kamesuta.mc.modspawner.launch.DLCalculate.DLDetails;
 
 public class Loader {
@@ -55,7 +54,7 @@ public class Loader {
 	}
 
 	private void installError(Exception e, String s) {
-		DownloadMonitor.IDownloadCloser closer = gui.getCalculate();
+		IDownloadCloser closer = gui.getCalculate();
 		if (closer.shouldStopIt()) {
 			logger.error("You have stopped the " + s + " before it could complete");
 			MdspCorePlugin.exit(1);
@@ -113,11 +112,11 @@ public class Loader {
 
 class LogManager {
 	String owner;
-	
+
 	public LogManager(String owner) {
 		this.owner = owner;
 	}
-	
+
 	public void info(String log) {
 		System.out.println(String.format("[INFO][%s]%s", owner, log));
 	}
