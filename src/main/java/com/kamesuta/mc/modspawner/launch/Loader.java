@@ -11,10 +11,10 @@ import java.net.URLConnection;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
+import com.kamesuta.mc.modspawner.gui.DLCalculate.DLDetails;
 import com.kamesuta.mc.modspawner.gui.DLGui;
 import com.kamesuta.mc.modspawner.gui.IDLCloser;
 import com.kamesuta.mc.modspawner.gui.IDLProgress;
-import com.kamesuta.mc.modspawner.gui.DLCalculate.DLDetails;
 
 public class Loader {
 	// private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 <<
@@ -105,8 +105,8 @@ public class Loader {
 	}
 
 	public static void main(String[] args) {
-		new Loader().download("http://k54.offliberty.com/P_ZafsauELQ.mp4");
-		// new Loader().download("http://auth.kamesuta.com/image/letsPlay.png");
+		//new Loader().download("http://k54.offliberty.com/P_ZafsauELQ.mp4");
+		new Loader().download("http://modspawner.mc.kamesuta.com/experimental/f41df44e-3757-402d-b011-3f39de937ea8.zip");
 	}
 }
 

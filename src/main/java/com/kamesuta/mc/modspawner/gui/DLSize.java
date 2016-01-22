@@ -9,41 +9,40 @@ public enum DLSize {
 	/**
 	 * 保存領域のサイズを計算します。
 	 */
-	STORAGE(1024, 2, new String[]{"", "K", "M", "G", "T", "P", "E", "Z", "Y"}),
+	STORAGE(1024, 2, new String[]{"", "K", "M", "G", "T", "P", "E", "Z", "Y"}, "B"),
 	/**
 	 * 速度などのサイズを計算します。
 	 */
-	SPEED(1000, 10, new String[]{"", "k", "M", "G", "T", "P", "E", "Z", "Y"});
+	SPEED(1024, 2, new String[]{"", "k", "M", "G", "T", "P", "E", "Z", "Y"}, "bps");
 
 	private final int pow;
 	private final int bottom;
 	private final String[] suffix;
+	private final String unit;
 
-	private DLSize(int pow, int bottom, String[] suffix)
+	private DLSize(int pow, int bottom, String[] suffix, String unit)
 	{
 		this.pow = pow;
 		this.bottom = bottom;
 		this.suffix = suffix;
+		this.unit = unit;
 	}
 
 	/**
 	 * サイズを単位を付けてフォーマットします。
-	 * @param size サイズ
-	 * @param unit 単位
+	 * @param speed サイズ
+	 * @param digit 小数桁数
 	 * @return フォーマット済み文字列
 	 */
-	public String getFormatSizeString(float size, String unit) {
-		// Return null string when size is zero.
-		if (size == 0) return "";
-
+	public String getFormatSizeString(double speed, int digit) {
 		int index = 0;
 
-		while (size >= pow) {
-			size /= pow;
+		while (speed >= pow) {
+			speed /= pow;
 			index++;
 		}
 
-		return String.format("%s%s%s", Integer.toString((int) size), (index < suffix.length ? suffix[index] : "-"), unit);
+		return String.format(("%."+Integer.toString(digit)+"f%s%s"), speed, (index < suffix.length ? suffix[index] : "-"), unit);
 	}
 
 	/**

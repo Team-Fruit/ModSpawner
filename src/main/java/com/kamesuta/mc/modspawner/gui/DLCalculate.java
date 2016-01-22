@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JProgressBar;
-import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 public class DLCalculate implements IDLCloser
@@ -74,7 +73,7 @@ public class DLCalculate implements IDLCloser
 	public static class DLDetails implements ActionListener {
 		private Timer tm = new Timer(1000, this);
 		private DLDetailsGraph detailsGraph;
-		private JTextArea detailsText;
+		private DLDetailsText detailsText;
 
 		public DLDetails()
 		{
@@ -97,7 +96,7 @@ public class DLCalculate implements IDLCloser
 			detailsGraph = d;
 		}
 
-		public void setDetailsTable(JTextArea t)
+		public void setDetailsText(DLDetailsText t)
 		{
 			detailsText = t;
 		}
@@ -113,15 +112,20 @@ public class DLCalculate implements IDLCloser
 			int count = newCount-oldCount;
 			newTime = System.nanoTime();
 			int time = (int) ((newTime>oldTime && oldTime>0) ? (newTime-oldTime) : NANOS_PER_SECOND);
-			double speed = NANOS_PER_SECOND * count / time;
+			double bps = NANOS_PER_SECOND * 8 * count / time;
 			oldCount = newCount;
 			oldTime = newTime;
 
 			if (detailsGraph != null)
 			{
-				detailsGraph.addObj((int)speed);
+				detailsGraph.addObj(bps);
 			}
 
+			if (detailsText != null)
+			{
+				detailsText.FieldTimeRemaining.setText(Integer.toString(count));
+				detailsText.FieldSpeed.setText(DLSize.SPEED.getFormatSizeString(bps, 2));
+			}
 
 			tm.start();
 		}
