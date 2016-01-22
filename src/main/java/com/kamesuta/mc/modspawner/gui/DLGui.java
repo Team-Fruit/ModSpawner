@@ -1,4 +1,4 @@
-package com.kamesuta.mc.modspawner.launch;
+package com.kamesuta.mc.modspawner.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,11 +21,14 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class DLGui {
+	/**
+	 * 表示する名前
+	 */
+	public static final String displayName = "Mod Spawner";
 
 	private JFrame frame;
 	private DLCalculate cal = new DLCalculate();
 	private JTable table;
-	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -78,18 +81,18 @@ public class DLGui {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		frame.setTitle(DownloadMonitor.displayName);
+		frame.setTitle(displayName);
 		frame.setResizable(true);
 
-		JPanel panel = new DownloadMonitor.DLBackground();
+		JPanel panel = new DLBackground();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setForeground(new Color(32, 43, 54));
 		panel.setBackground(new Color(86, 84, 102));
 
-				DownloadMonitor.DLDetailsGraph panelDetails = new DownloadMonitor.DLDetailsGraph();
-				panelDetails.setForeground(Color.LIGHT_GRAY);
-				panelDetails.setOpaque(false);
-				cal.details.setDetailsGraph(panelDetails);
+				DLDetailsGraph panelDetailsGraph = new DLDetailsGraph();
+				panelDetailsGraph.setForeground(Color.LIGHT_GRAY);
+				panelDetailsGraph.setOpaque(false);
+				cal.details.setDetailsGraph(panelDetailsGraph);
 
 				JPanel panelLog = new JPanel();
 				panelLog.setOpaque(false);
@@ -133,13 +136,14 @@ public class DLGui {
 				);
 				panelTitle.setLayout(gl_panelTitle);
 
-				JPanel panelText = new JPanel();
-				panelText.setOpaque(false);
+				DLDetailsText panelDetailsText = new DLDetailsText();
+				panelDetailsText.setOpaque(false);
+				cal.details.setDetailsText(panelDetailsText);
 				GroupLayout gl_panel = new GroupLayout(panel);
 				gl_panel.setHorizontalGroup(
 					gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(panelDetails, GroupLayout.PREFERRED_SIZE, 664, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panelDetailsGraph, GroupLayout.PREFERRED_SIZE, 664, GroupLayout.PREFERRED_SIZE)
 							.addGap(0))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addContainerGap()
@@ -151,7 +155,7 @@ public class DLGui {
 								.addGroup(gl_panel.createSequentialGroup()
 									.addComponent(panelTitle, GroupLayout.PREFERRED_SIZE, 345, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panelText, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)))
+									.addComponent(panelDetailsText, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)))
 							.addContainerGap())
 				);
 				gl_panel.setVerticalGroup(
@@ -160,19 +164,14 @@ public class DLGui {
 							.addContainerGap()
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(panelTitle, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-								.addComponent(panelText, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
+								.addComponent(panelDetailsText, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 								.addComponent(panelLog, GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
 								.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panelDetails, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+							.addComponent(panelDetailsGraph, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
 				);
-				panelText.setLayout(new BorderLayout(0, 0));
-
-				table_1 = new JTable();
-				table_1.setOpaque(false);
-				panelText.add(table_1, BorderLayout.CENTER);
 				panelList.setLayout(new BorderLayout(0, 0));
 
 				table = new JTable();
