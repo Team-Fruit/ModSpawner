@@ -1,11 +1,11 @@
-package com.kamesuta.mc.modspawner.gui;
+package com.kamesuta.mc.modspawner.util;
 
 /**
  * ファイルのサイズについて扱います
  * @author Kamesuta
  *
  */
-public enum DLSize {
+public enum SizeUnit {
 	/**
 	 * 保存領域のサイズを計算します。
 	 */
@@ -20,7 +20,7 @@ public enum DLSize {
 	private final String[] suffix;
 	private final String unit;
 
-	private DLSize(int pow, int bottom, String[] suffix, String unit)
+	private SizeUnit(int pow, int bottom, String[] suffix, String unit)
 	{
 		this.pow = pow;
 		this.bottom = bottom;

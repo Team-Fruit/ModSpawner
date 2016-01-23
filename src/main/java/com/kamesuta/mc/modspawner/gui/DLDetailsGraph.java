@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import com.kamesuta.mc.modspawner.util.SizeUnit;
+
 public class DLDetailsGraph extends JPanel {
 	public static final int objwidth = 5;
 	public static final int objspace = 2;
@@ -29,14 +31,14 @@ public class DLDetailsGraph extends JPanel {
 		g.setColor(f);
 
 		if (!objects.isEmpty()) {
-			int max = DLSize.SPEED.getMeasure(Collections.max(objects));
+			int max = SizeUnit.SPEED.getMeasure(Collections.max(objects));
 
 			FontMetrics fm = g.getFontMetrics();
-			g.drawString(DLSize.SPEED.getFormatSizeString(max, 0), 0, fm.getAscent());
+			g.drawString(SizeUnit.SPEED.getFormatSizeString(max, 0), 0, fm.getAscent());
 			g.drawString("0", 0, height - (fm.getHeight() - fm.getAscent()));
 
 			for (int i = 0; i < objects.size(); i++) {
-				if ((objwidth + objspace) * i < width) {
+				if ((objwidth + objspace) * (i-5) < width) {
 					int objlength = objects.get(i) * height / max;
 					g.fillRect(width - ((objwidth + objspace) * (objects.size() - i)), height - objlength, objwidth,
 							objlength);

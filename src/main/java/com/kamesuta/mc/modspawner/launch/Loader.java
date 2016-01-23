@@ -88,7 +88,7 @@ public class Loader {
 				if (closer.shouldStopIt())
 					break;
 
-				details.countUp(read);
+				details.upcount(read);
 				progress.updateProgress(fullLength);
 			}
 			is.close();

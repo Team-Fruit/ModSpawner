@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
+import com.kamesuta.mc.modspawner.util.SizeUnit;
+import com.kamesuta.mc.modspawner.util.Speed;
+
 public class DLCalculate implements IDLCloser
 {
 	private Thread pokeThread;
@@ -71,6 +74,10 @@ public class DLCalculate implements IDLCloser
 	public final DLDetails details = new DLDetails();
 
 	public static class DLDetails implements ActionListener {
+		
+		/** 速度計算機 */
+		private Speed speed = new Speed(20);
+		
 		private Timer tm = new Timer(1000, this);
 		private DLDetailsGraph detailsGraph;
 		private DLDetailsText detailsText;
@@ -85,12 +92,6 @@ public class DLCalculate implements IDLCloser
 			tm.restart();
 		}
 
-		public static final double NANOS_PER_SECOND = 1000000000.0;
-		private int oldCount;
-		private int newCount;
-		private long newTime;
-		private long oldTime;
-
 		public void setDetailsGraph(DLDetailsGraph d)
 		{
 			detailsGraph = d;
@@ -101,30 +102,28 @@ public class DLCalculate implements IDLCloser
 			detailsText = t;
 		}
 
-		public void countUp(int size)
+		public void upcount(int size)
 		{
-			newCount += size;
+			// increase count
+			speed.counter += size;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// Calculate Speed
-			int count = newCount-oldCount;
-			newTime = System.nanoTime();
-			int time = (int) ((newTime>oldTime && oldTime>0) ? (newTime-oldTime) : NANOS_PER_SECOND);
-			double bps = NANOS_PER_SECOND * 8 * count / time;
-			oldCount = newCount;
-			oldTime = newTime;
+			speed.update();
+			double speedsize = speed.getSpeed();
+			int avefull = speed.getAverageFull(1000000000l);
 
 			if (detailsGraph != null)
 			{
-				detailsGraph.addObj(bps);
+				detailsGraph.addObj(speedsize);
 			}
 
 			if (detailsText != null)
 			{
-				detailsText.FieldTimeRemaining.setText(Integer.toString(count));
-				detailsText.FieldSpeed.setText(DLSize.SPEED.getFormatSizeString(bps, 2));
+				detailsText.FieldTimeRemaining.setText(avefull>0 ? String.valueOf(avefull) : "計算中");
+				detailsText.FieldSpeed.setText(speedsize>0 ? SizeUnit.SPEED.getFormatSizeString(speedsize, 2) : "計算中");
 			}
 
 			tm.start();
