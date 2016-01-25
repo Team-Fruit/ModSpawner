@@ -2,223 +2,134 @@ package com.kamesuta.mc.modspawner.gui.dl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class DLGui {
-	/**
-	 * 表示する名前
-	 */
-	public static final String displayName = "Mod Spawner";
-
-	private JFrame status;
-	private DLCalculate cal = new DLCalculate();
-	private JTable table;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DLGui window = new DLGui();
-					window.status.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public DLGui() {
-		initialize();
-	}
-
-	/**
-	 * Show the application.
-	 */
-	public void makeGUI()
-	{
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				status.setVisible(true);
-			}
-		});
-	}
+public class DLGui extends JPanel {
+	private DLDetailsGraph panelDetailsGraph;
+	private DLDetailsText panelDetailsText;
+	private JProgressBar progressBarOne;
+	private JProgressBar progressBarAll;
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		status = new JFrame();
-		status.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				requestClose("ウィンドウを閉じるとMinecraftを起動することができません。\nそれでもよろしいですか？");
-			}
-		});
-		status.setIconImage(Toolkit.getDefaultToolkit().getImage(DLGui.class.getResource("modspawner_icon.png")));
-		status.setSize(680, 400);
-		status.setLocationRelativeTo(null);
-		status.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		status.getContentPane().setLayout(new BorderLayout(0, 0));
-		status.setTitle(displayName);
-		status.setResizable(true);
+	public DLGui() {
 
-		JPanel panel = new DLBackground();
-		status.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setForeground(new Color(32, 43, 54));
-		panel.setBackground(new Color(86, 84, 102));
+			DLBackground panelMain = new DLBackground();
+			panelMain.setForeground(new Color(32, 43, 54));
+			panelMain.setBackground(new Color(86, 84, 102));
 
-				DLDetailsGraph panelDetailsGraph = new DLDetailsGraph();
-				panelDetailsGraph.setForeground(Color.LIGHT_GRAY);
-				panelDetailsGraph.setOpaque(false);
-				cal.details.setDetailsGraph(panelDetailsGraph);
+					panelDetailsGraph = new DLDetailsGraph();
+					panelDetailsGraph.setForeground(Color.LIGHT_GRAY);
+					panelDetailsGraph.setOpaque(false);
 
-				JPanel panelLog = new JPanel();
-				panelLog.setOpaque(false);
+					JPanel panelLog = new JPanel();
+					panelLog.setOpaque(false);
 
-				JPanel panelList = new JPanel();
-				panelList.setOpaque(false);
+					JPanel panelTitle = new JPanel();
+					panelTitle.setOpaque(false);
 
-				JPanel panelTitle = new JPanel();
-				panelTitle.setOpaque(false);
+					JLabel labelIcon = new JLabel();
+					labelIcon.setIcon(new ImageIcon(DLGui.class.getResource("modspawner_icon.png")));
 
-				JLabel labelIcon = new JLabel();
-				labelIcon.setIcon(new ImageIcon(DLGui.class.getResource("modspawner_icon.png")));
+					JLabel labelLogo = new JLabel();
+					labelLogo.setIcon(new ImageIcon(DLGui.class.getResource("logo.png")));
 
-				JLabel labelLogo = new JLabel();
-				labelLogo.setIcon(new ImageIcon(DLGui.class.getResource("logo.png")));
-
-				JLabel lblVer = new JLabel("ver 1.0");
-				lblVer.setForeground(Color.WHITE);
-				GroupLayout gl_panelTitle = new GroupLayout(panelTitle);
-				gl_panelTitle.setHorizontalGroup(
-					gl_panelTitle.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelTitle.createSequentialGroup()
-							.addComponent(labelIcon)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(labelLogo)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblVer)
-							.addContainerGap(141, Short.MAX_VALUE))
-				);
-				gl_panelTitle.setVerticalGroup(
-					gl_panelTitle.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelTitle.createSequentialGroup()
-							.addGroup(gl_panelTitle.createParallelGroup(Alignment.LEADING)
+					JLabel lblVer = new JLabel("ver 1.0");
+					lblVer.setForeground(Color.WHITE);
+					GroupLayout gl_panelTitle = new GroupLayout(panelTitle);
+					gl_panelTitle.setHorizontalGroup(
+						gl_panelTitle.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panelTitle.createSequentialGroup()
 								.addComponent(labelIcon)
-								.addGroup(gl_panelTitle.createSequentialGroup()
-									.addContainerGap()
-									.addGroup(gl_panelTitle.createParallelGroup(Alignment.TRAILING)
-										.addComponent(lblVer)
-										.addComponent(labelLogo))))
-							.addContainerGap(2, Short.MAX_VALUE))
-				);
-				panelTitle.setLayout(gl_panelTitle);
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(labelLogo)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblVer)
+								.addContainerGap(141, Short.MAX_VALUE))
+					);
+					gl_panelTitle.setVerticalGroup(
+						gl_panelTitle.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panelTitle.createSequentialGroup()
+								.addGroup(gl_panelTitle.createParallelGroup(Alignment.LEADING)
+									.addComponent(labelIcon)
+									.addGroup(gl_panelTitle.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(gl_panelTitle.createParallelGroup(Alignment.TRAILING)
+											.addComponent(lblVer)
+											.addComponent(labelLogo))))
+								.addContainerGap(2, Short.MAX_VALUE))
+					);
+					panelTitle.setLayout(gl_panelTitle);
 
-				DLDetailsText panelDetailsText = new DLDetailsText();
-				panelDetailsText.setOpaque(false);
-				cal.details.setDetailsText(panelDetailsText);
-				GroupLayout gl_panel = new GroupLayout(panel);
-				gl_panel.setHorizontalGroup(
-					gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(panelDetailsGraph, GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
-							.addGap(0))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(panelList, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
-									.addComponent(panelLog, GroupLayout.PREFERRED_SIZE, 204, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(panelTitle, GroupLayout.PREFERRED_SIZE, 345, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(panelDetailsText, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)))
-							.addContainerGap())
-				);
-				gl_panel.setVerticalGroup(
-					gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(panelTitle, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-								.addComponent(panelDetailsText, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panelLog, GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-								.addComponent(panelList, GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panelDetailsGraph, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-				);
-				panelList.setLayout(new BorderLayout(0, 0));
+					panelDetailsText = new DLDetailsText();
+					panelDetailsText.setOpaque(false);
+					GroupLayout gl_panelMain = new GroupLayout(panelMain);
+					gl_panelMain.setHorizontalGroup(
+						gl_panelMain.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panelMain.createSequentialGroup()
+								.addComponent(panelDetailsGraph, GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
+								.addGap(0))
+							.addGroup(gl_panelMain.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(gl_panelMain.createParallelGroup(Alignment.LEADING)
+									.addComponent(panelLog, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 204, GroupLayout.PREFERRED_SIZE)
+									.addGroup(gl_panelMain.createSequentialGroup()
+										.addComponent(panelTitle, GroupLayout.PREFERRED_SIZE, 345, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(panelDetailsText, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
+								.addContainerGap())
+					);
+					gl_panelMain.setVerticalGroup(
+						gl_panelMain.createParallelGroup(Alignment.TRAILING)
+							.addGroup(gl_panelMain.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(gl_panelMain.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(panelTitle, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+									.addComponent(panelDetailsText, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(panelLog, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(panelDetailsGraph, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+					);
+					panelLog.setLayout(new BorderLayout(0, 0));
 
-				table = new JTable();
-				table.setOpaque(false);
-				panelList.add(table, BorderLayout.CENTER);
-				panelLog.setLayout(new BorderLayout(0, 0));
+					JTextArea textArea = new JTextArea();
+					textArea.setOpaque(false);
+					panelLog.add(textArea, BorderLayout.CENTER);
+					panelMain.setLayout(gl_panelMain);
 
-				JTextArea textArea = new JTextArea();
-				textArea.setOpaque(false);
-				panelLog.add(textArea, BorderLayout.CENTER);
-				panel.setLayout(gl_panel);
+			JPanel panelProgress = new JPanel();
+					panelProgress.setLayout(new GridLayout(0, 1, 0, 0));
 
-		JPanel panelProgress = new JPanel();
-		status.getContentPane().add(panelProgress, BorderLayout.SOUTH);
-				panelProgress.setLayout(new GridLayout(0, 1, 0, 0));
+					progressBarOne = new JProgressBar();
+					panelProgress.add(progressBarOne);
+					progressBarOne.setIndeterminate(true);
+					progressBarOne.setForeground(Color.RED);
+					progressBarOne.setStringPainted(true);
+					progressBarOne.setBackground(Color.LIGHT_GRAY);
+					progressBarOne.setBorderPainted(false);
+					progressBarOne.setString("Loading...");
 
-				JProgressBar progressBarOne = new JProgressBar();
-				panelProgress.add(progressBarOne);
-				progressBarOne.setIndeterminate(true);
-				progressBarOne.setForeground(Color.RED);
-				progressBarOne.setStringPainted(true);
-				progressBarOne.setBackground(Color.LIGHT_GRAY);
-				progressBarOne.setBorderPainted(false);
-				progressBarOne.setString("Loading...");
-				cal.progressOne.setProgressBar(progressBarOne);
-
-				JProgressBar progressBarAll = new JProgressBar();
-				progressBarAll.setIndeterminate(true);
-				progressBarAll.setForeground(Color.RED);
-				progressBarAll.setStringPainted(true);
-				progressBarAll.setBackground(Color.LIGHT_GRAY);
-				progressBarAll.setBorderPainted(false);
-				progressBarAll.setString("Loading...");
-				cal.progressAll.setProgressBar(progressBarAll);
-				panelProgress.add(progressBarAll);
-	}
-
-	protected void requestClose(String message) {
-		int shouldClose = JOptionPane.showConfirmDialog(status, message, "本当に終了しますか？", JOptionPane.YES_NO_OPTION,
-				JOptionPane.WARNING_MESSAGE);
-		if (shouldClose == JOptionPane.YES_OPTION)
-			status.dispose();
-		cal.requestClose();
-	}
-
-	public DLCalculate getCalculate()
-	{
-		return cal;
+					progressBarAll = new JProgressBar();
+					progressBarAll.setIndeterminate(true);
+					progressBarAll.setForeground(Color.RED);
+					progressBarAll.setStringPainted(true);
+					progressBarAll.setBackground(Color.LIGHT_GRAY);
+					progressBarAll.setBorderPainted(false);
+					progressBarAll.setString("Loading...");
+					panelProgress.add(progressBarAll);
+		setLayout(new BorderLayout(0, 0));
+		add(panelMain, BorderLayout.CENTER);
+		add(panelProgress, BorderLayout.SOUTH);
 	}
 }

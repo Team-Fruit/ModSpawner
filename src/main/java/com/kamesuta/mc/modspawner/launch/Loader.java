@@ -11,10 +11,10 @@ import java.net.URLConnection;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
-import com.kamesuta.mc.modspawner.gui.dl.DLGui;
+import com.kamesuta.mc.modspawner.gui.UIFrame;
+import com.kamesuta.mc.modspawner.gui.dl.DLCalculate.DLDetails;
 import com.kamesuta.mc.modspawner.gui.dl.IDLCloser;
 import com.kamesuta.mc.modspawner.gui.dl.IDLProgress;
-import com.kamesuta.mc.modspawner.gui.dl.DLCalculate.DLDetails;
 
 public class Loader {
 	// private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 <<
@@ -23,10 +23,10 @@ public class Loader {
 	private static final LogManager logger = LogManager.getLogger(owner);
 
 	private File modsDir;
-	private DLGui gui;
+	private UIFrame gui;
 
 	public Loader() {
-		gui = new DLGui();
+		gui = new UIFrame();
 		gui.makeGUI();
 
 		// File mcDir = (File) FMLInjectionData.data()[6];
