@@ -11,10 +11,10 @@ import java.net.URLConnection;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
-import com.kamesuta.mc.modspawner.gui.DLCalculate.DLDetails;
-import com.kamesuta.mc.modspawner.gui.DLGui;
-import com.kamesuta.mc.modspawner.gui.IDLCloser;
-import com.kamesuta.mc.modspawner.gui.IDLProgress;
+import com.kamesuta.mc.modspawner.gui.dl.DLGui;
+import com.kamesuta.mc.modspawner.gui.dl.IDLCloser;
+import com.kamesuta.mc.modspawner.gui.dl.IDLProgress;
+import com.kamesuta.mc.modspawner.gui.dl.DLCalculate.DLDetails;
 
 public class Loader {
 	// private static ByteBuffer downloadBuffer = ByteBuffer.allocateDirect(1 <<

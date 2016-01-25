@@ -1,4 +1,4 @@
-package com.kamesuta.mc.modspawner.gui;
+package com.kamesuta.mc.modspawner.gui.dl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,7 +26,7 @@ public class DLGui {
 	 */
 	public static final String displayName = "Mod Spawner";
 
-	private JFrame frame;
+	private JFrame status;
 	private DLCalculate cal = new DLCalculate();
 	private JTable table;
 
@@ -38,7 +38,7 @@ public class DLGui {
 			public void run() {
 				try {
 					DLGui window = new DLGui();
-					window.frame.setVisible(true);
+					window.status.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,7 +60,7 @@ public class DLGui {
 	{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				frame.setVisible(true);
+				status.setVisible(true);
 			}
 		});
 	}
@@ -69,23 +69,23 @@ public class DLGui {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.addWindowListener(new WindowAdapter() {
+		status = new JFrame();
+		status.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				requestClose("ウィンドウを閉じるとMinecraftを起動することができません。\nそれでもよろしいですか？");
 			}
 		});
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(DLGui.class.getResource("modspawner_icon.png")));
-		frame.setSize(680, 400);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		frame.setTitle(displayName);
-		frame.setResizable(true);
+		status.setIconImage(Toolkit.getDefaultToolkit().getImage(DLGui.class.getResource("modspawner_icon.png")));
+		status.setSize(680, 400);
+		status.setLocationRelativeTo(null);
+		status.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		status.getContentPane().setLayout(new BorderLayout(0, 0));
+		status.setTitle(displayName);
+		status.setResizable(true);
 
 		JPanel panel = new DLBackground();
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		status.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setForeground(new Color(32, 43, 54));
 		panel.setBackground(new Color(86, 84, 102));
 
@@ -143,7 +143,7 @@ public class DLGui {
 				gl_panel.setHorizontalGroup(
 					gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(panelDetailsGraph, GroupLayout.PREFERRED_SIZE, 664, GroupLayout.PREFERRED_SIZE)
+							.addComponent(panelDetailsGraph, GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
 							.addGap(0))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addContainerGap()
@@ -185,7 +185,7 @@ public class DLGui {
 				panel.setLayout(gl_panel);
 
 		JPanel panelProgress = new JPanel();
-		frame.getContentPane().add(panelProgress, BorderLayout.SOUTH);
+		status.getContentPane().add(panelProgress, BorderLayout.SOUTH);
 				panelProgress.setLayout(new GridLayout(0, 1, 0, 0));
 
 				JProgressBar progressBarOne = new JProgressBar();
@@ -210,10 +210,10 @@ public class DLGui {
 	}
 
 	protected void requestClose(String message) {
-		int shouldClose = JOptionPane.showConfirmDialog(frame, message, "本当に終了しますか？", JOptionPane.YES_NO_OPTION,
+		int shouldClose = JOptionPane.showConfirmDialog(status, message, "本当に終了しますか？", JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE);
 		if (shouldClose == JOptionPane.YES_OPTION)
-			frame.dispose();
+			status.dispose();
 		cal.requestClose();
 	}
 

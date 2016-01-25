@@ -1,4 +1,4 @@
-package com.kamesuta.mc.modspawner.gui;
+package com.kamesuta.mc.modspawner.gui.dl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -74,10 +74,10 @@ public class DLCalculate implements IDLCloser
 	public final DLDetails details = new DLDetails();
 
 	public static class DLDetails implements ActionListener {
-		
+
 		/** 速度計算機 */
 		private Speed speed = new Speed(20);
-		
+
 		private Timer tm = new Timer(1000, this);
 		private DLDetailsGraph detailsGraph;
 		private DLDetailsText detailsText;
@@ -117,7 +117,7 @@ public class DLCalculate implements IDLCloser
 
 			if (detailsGraph != null)
 			{
-				detailsGraph.addObj(speedsize);
+				detailsGraph.addSpeed(speed).repaint();
 			}
 
 			if (detailsText != null)

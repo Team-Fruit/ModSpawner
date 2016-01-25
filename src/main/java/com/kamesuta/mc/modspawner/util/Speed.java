@@ -17,18 +17,14 @@ public class Speed {
 	 * サイズの増加量
 	 */
 	public int counter;
-	/**
-	 * トータルサイズ
-	 */
-	public int totalcounter;
 
 	private long newTime;
 	private long oldTime;
 
 	private int lastCount;
 	private int lastTime;
-	private Average aveCount;
-	private Average aveTime;
+	private PushList<Integer> aveCount;
+	private PushList<Integer> aveTime;
 
 	/**
 	 * 平均の蓄積量を指定してください。
@@ -36,8 +32,8 @@ public class Speed {
 	 */
 	public Speed(int averagesize)
 	{
-		aveCount = new Average(averagesize);
-		aveTime = new Average(averagesize);
+		aveCount = new PushList<Integer>(averagesize);
+		aveTime = new PushList<Integer>(averagesize);
 	}
 
 	/**
@@ -51,8 +47,8 @@ public class Speed {
 		newTime = System.nanoTime();
 
 		// update count
-		aveCount.update(lastCount = count);
-		aveTime.update(lastTime = (int)(newTime-oldTime));
+		aveCount.add(lastCount = count);
+		aveTime.add(lastTime = (int)(newTime-oldTime));
 
 		// reset
 		oldTime = newTime;
@@ -69,8 +65,7 @@ public class Speed {
 	{
 		// update
 		update(counter);
-		totalcounter += counter;
-		
+
 		// reset counter
 		counter = 0;
 
@@ -91,7 +86,7 @@ public class Speed {
 	 */
 	public int getAverageCount()
 	{
-		return (int) aveCount.average();
+		return (int) Util.average(aveCount);
 	}
 
 	/**
@@ -107,7 +102,7 @@ public class Speed {
 	 */
 	public int getAverageTime()
 	{
-		return (int) aveTime.average();
+		return (int) Util.average(aveTime);
 	}
 
 	/**
@@ -129,8 +124,8 @@ public class Speed {
 	 */
 	public double getAverageByteSpeed()
 	{
-		double timeave = aveTime.average();
-		double countave = aveCount.average();
+		double timeave = Util.average(aveTime);
+		double countave = Util.average(aveCount);
 		if (timeave>0 && oldTime>0 && countave>0) {
 			return NANOS_PER_SECOND * countave / timeave;
 		} else {
@@ -164,7 +159,7 @@ public class Speed {
 	{
 		double speed = getByteSpeed();
 		if (speed>0) {
-			return (int) ((bytes-totalcounter) / speed);
+			return (int) (bytes / speed);
 		} else {
 			return -1;
 		}
@@ -178,7 +173,7 @@ public class Speed {
 	{
 		double speed = getAverageByteSpeed();
 		if (speed>0) {
-			return (int) ((bytes-totalcounter) / speed);
+			return (int) (bytes / speed);
 		} else {
 			return -1;
 		}

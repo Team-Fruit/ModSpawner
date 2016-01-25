@@ -1,4 +1,4 @@
-package com.kamesuta.mc.modspawner.gui;
+package com.kamesuta.mc.modspawner.gui.dl;
 
 import javax.swing.JProgressBar;
 
