@@ -20,6 +20,7 @@ public class UIFrame {
 
 	private JFrame status;
 	private DLCalculate cal = new DLCalculate();
+	public DLGui gui;
 
 	/**
 	 * Create the application.
@@ -59,7 +60,7 @@ public class UIFrame {
 		status.setTitle(displayName);
 		status.setResizable(true);
 
-		DLGui gui = new DLGui();
+		gui = new DLGui();
 		status.getContentPane().add(gui, BorderLayout.CENTER);
 	}
 	

@@ -1,6 +1,6 @@
 package com.kamesuta.mc.modspawner.gui.dl;
 
-import javax.swing.JProgressBar;
+import com.kamesuta.mc.modspawner.download.Status;
 
 /**
  * ダウンロード進行をコントロールします
@@ -8,26 +8,8 @@ import javax.swing.JProgressBar;
  */
 public interface IDLProgress {
 	/**
-	 * 進行バーオブジェクトをセットします
-	 * @param p
-	 */
-	void setProgressBar(JProgressBar p);
-
-	/**
-	 * 予想サイズを更新します
-	 * @param sizeGuess
-	 */
-	void updateGuess(int sizeGuess);
-
-	/**
 	 * 進行サイズを更新します
-	 * @param fullLength
+	 * @param status 進行度
 	 */
-	void updateProgress(int fullLength);
-
-	/**
-	 * 表示文字を変更します。
-	 * @param string
-	 */
-	void updateString(String string);
+	void update(Status status);
 }

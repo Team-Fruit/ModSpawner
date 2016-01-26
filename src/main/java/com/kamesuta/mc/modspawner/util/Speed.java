@@ -13,10 +13,6 @@ public class Speed {
 	 * ビットとバイトの比率
 	 */
 	public static final int BIT_PER_BYTE = 8;
-	/**
-	 * サイズの増加量
-	 */
-	public int counter;
 
 	private long newTime;
 	private long oldTime;
@@ -52,22 +48,6 @@ public class Speed {
 
 		// reset
 		oldTime = newTime;
-
-		// method chain
-		return this;
-	}
-
-	/**
-	 * 情報を更新します
-	 * @return this
-	 */
-	public Speed update()
-	{
-		// update
-		update(counter);
-
-		// reset counter
-		counter = 0;
 
 		// method chain
 		return this;

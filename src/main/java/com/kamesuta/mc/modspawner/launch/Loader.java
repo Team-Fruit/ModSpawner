@@ -11,8 +11,8 @@ import java.net.URLConnection;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
+import com.kamesuta.mc.modspawner.download.Status;
 import com.kamesuta.mc.modspawner.gui.UIFrame;
-import com.kamesuta.mc.modspawner.gui.dl.DLCalculate.DLDetails;
 import com.kamesuta.mc.modspawner.gui.dl.IDLCloser;
 import com.kamesuta.mc.modspawner.gui.dl.IDLProgress;
 
@@ -23,11 +23,13 @@ public class Loader {
 	private static final LogManager logger = LogManager.getLogger(owner);
 
 	private File modsDir;
+	private Status status;
 	private UIFrame gui;
 
 	public Loader() {
 		gui = new UIFrame();
 		gui.makeGUI();
+		status = new Status();
 
 		// File mcDir = (File) FMLInjectionData.data()[6];
 		File mcDir = new File("./");
@@ -69,10 +71,10 @@ public class Loader {
 
 		int read, fullLength = 0;
 
-		IDLProgress progress = gui.getCalculate().progressOne;
 		IDLCloser closer = gui.getCalculate();
-		DLDetails details = gui.getCalculate().details;
-		progress.updateGuess(sizeGuess);
+		IDLProgress progress = gui.gui;
+		status.narrowLength = sizeGuess;
+		progress.update(status);
 
 		if (!target.exists())
 			target.createNewFile();
@@ -82,14 +84,13 @@ public class Loader {
 			byte[] buffer = new byte[1024];
 			while ((read = is.read(buffer)) >= 0) {
 				fos.write(buffer, 0, read);
-				;
 				fullLength += read;
 
 				if (closer.shouldStopIt())
 					break;
 
-				details.upcount(read);
-				progress.updateProgress(fullLength);
+				status.update(read, fullLength);
+				progress.update(status);
 			}
 			is.close();
 			closer.setPokeThread(null);

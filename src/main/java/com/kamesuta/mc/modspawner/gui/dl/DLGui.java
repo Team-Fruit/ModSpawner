@@ -3,6 +3,8 @@ package com.kamesuta.mc.modspawner.gui.dl;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -12,12 +14,18 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.Timer;
 
-public class DLGui extends JPanel {
+import com.kamesuta.mc.modspawner.download.Status;
+import com.kamesuta.mc.modspawner.util.SizeUnit;
+import com.kamesuta.mc.modspawner.util.Speed;
+
+public class DLGui extends JPanel implements ActionListener, IDLProgress {
+
 	private DLDetailsGraph panelDetailsGraph;
 	private DLDetailsText panelDetailsText;
-	private JProgressBar progressBarOne;
-	private JProgressBar progressBarAll;
+	private JProgressBar progressNarrow;
+	private JProgressBar progressWide;
 
 	/**
 	 * Initialize the contents of the frame.
@@ -111,25 +119,78 @@ public class DLGui extends JPanel {
 			JPanel panelProgress = new JPanel();
 					panelProgress.setLayout(new GridLayout(0, 1, 0, 0));
 
-					progressBarOne = new JProgressBar();
-					panelProgress.add(progressBarOne);
-					progressBarOne.setIndeterminate(true);
-					progressBarOne.setForeground(Color.RED);
-					progressBarOne.setStringPainted(true);
-					progressBarOne.setBackground(Color.LIGHT_GRAY);
-					progressBarOne.setBorderPainted(false);
-					progressBarOne.setString("Loading...");
+					progressNarrow = new JProgressBar();
+					progressNarrow.setMaximum(Status.PRECISION);
+					progressNarrow.setIndeterminate(true);
+					progressNarrow.setForeground(Color.RED);
+					progressNarrow.setStringPainted(true);
+					progressNarrow.setBackground(Color.LIGHT_GRAY);
+					progressNarrow.setBorderPainted(false);
+					progressNarrow.setString(Status.DEFAULT_MESSAGE);
+					panelProgress.add(progressNarrow);
 
-					progressBarAll = new JProgressBar();
-					progressBarAll.setIndeterminate(true);
-					progressBarAll.setForeground(Color.RED);
-					progressBarAll.setStringPainted(true);
-					progressBarAll.setBackground(Color.LIGHT_GRAY);
-					progressBarAll.setBorderPainted(false);
-					progressBarAll.setString("Loading...");
-					panelProgress.add(progressBarAll);
-		setLayout(new BorderLayout(0, 0));
-		add(panelMain, BorderLayout.CENTER);
-		add(panelProgress, BorderLayout.SOUTH);
+					progressWide = new JProgressBar();
+					progressWide.setMaximum(Status.PRECISION);
+					progressWide.setIndeterminate(true);
+					progressWide.setForeground(Color.RED);
+					progressWide.setStringPainted(true);
+					progressWide.setBackground(Color.LIGHT_GRAY);
+					progressWide.setBorderPainted(false);
+					progressWide.setString(Status.DEFAULT_MESSAGE);
+					panelProgress.add(progressWide);
+
+			setLayout(new BorderLayout(0, 0));
+			add(panelMain, BorderLayout.CENTER);
+			add(panelProgress, BorderLayout.SOUTH);
+
+			// Timer Start
+			tm.restart();
+	}
+
+	@Override
+	public void update(Status status) {
+		progressNarrow.setIndeterminate(!(status.narrowLength > 0));
+		progressNarrow.setValue(status.getNarrowStatus());
+		progressNarrow.setString(status.getNarrowMessage());
+
+		progressWide.setIndeterminate(!(status.wideLength > 0));
+		progressWide.setValue(status.getWideStatus());
+		progressWide.setString(status.getWideMessage());
+
+		updateSize += status.updateSize;
+	}
+
+	/** 速度計算機 */
+	private Speed speed = new Speed(20);
+	/** タイマー */
+	private Timer tm = new Timer(1000, this);
+	/** 速度計算用更新量 */
+	private int updateSize;
+
+	/**
+	 * 定期イベント
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// Calculate Speed
+		speed.update(updateSize);
+		updateSize = 0;
+
+		double speedsize = speed.getSpeed();
+		int avefull = speed.getAverageFull(1000000000l);
+
+		if (panelDetailsGraph != null)
+		{
+			panelDetailsGraph.addSpeed(speed).repaint();
+		}
+
+		if (panelDetailsText != null)
+		{
+			panelDetailsText.FieldTimeRemaining.setText(avefull>0 ? String.valueOf(avefull) : "計算中");
+			panelDetailsText.FieldSpeed.setText(speedsize>0 ? SizeUnit.SPEED.getFormatSizeString(speedsize, 2) : "計算中");
+		}
+
+		// Timer Continue
+		tm.start();
 	}
 }
