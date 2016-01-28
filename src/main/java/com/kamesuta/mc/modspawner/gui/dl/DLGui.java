@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.Timer;
 
-import com.kamesuta.mc.modspawner.download.Status;
+import com.kamesuta.mc.modspawner.download.status.Status;
 import com.kamesuta.mc.modspawner.util.SizeUnit;
 import com.kamesuta.mc.modspawner.util.Speed;
 
@@ -149,13 +149,13 @@ public class DLGui extends JPanel implements ActionListener, IDLProgress {
 
 	@Override
 	public void update(Status status) {
-		progressNarrow.setIndeterminate(!(status.narrowLength > 0));
-		progressNarrow.setValue(status.getNarrowStatus());
-		progressNarrow.setString(status.getNarrowMessage());
+//		progressNarrow.setIndeterminate(!(status.narrowLength > 0));
+//		progressNarrow.setValue(status.getNarrowStatus());
+//		progressNarrow.setString(status.getNarrowMessage());
 
-		progressWide.setIndeterminate(!(status.wideLength > 0));
-		progressWide.setValue(status.getWideStatus());
-		progressWide.setString(status.getWideMessage());
+		progressWide.setIndeterminate(!(status.max > 0));
+		progressWide.setValue(status.getStatus());
+		progressWide.setString(status.getMessageStatus());
 
 		updateSize += status.updateSize;
 	}
@@ -186,7 +186,7 @@ public class DLGui extends JPanel implements ActionListener, IDLProgress {
 
 		if (panelDetailsText != null)
 		{
-			panelDetailsText.FieldTimeRemaining.setText(avefull>0 ? String.valueOf(avefull) : "計算中");
+			//panelDetailsText.FieldTimeRemaining.setText(avefull>0 ? String.valueOf(avefull) : "計算中");
 			panelDetailsText.FieldSpeed.setText(speedsize>0 ? SizeUnit.SPEED.getFormatSizeString(speedsize, 2) : "計算中");
 		}
 

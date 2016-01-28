@@ -11,7 +11,7 @@ import java.net.URLConnection;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import com.kamesuta.mc.modspawner.asm.MdspCorePlugin;
-import com.kamesuta.mc.modspawner.download.Status;
+import com.kamesuta.mc.modspawner.download.status.Status;
 import com.kamesuta.mc.modspawner.gui.UIFrame;
 import com.kamesuta.mc.modspawner.gui.dl.IDLCloser;
 import com.kamesuta.mc.modspawner.gui.dl.IDLProgress;
@@ -73,7 +73,7 @@ public class Loader {
 
 		IDLCloser closer = gui.getCalculate();
 		IDLProgress progress = gui.gui;
-		status.narrowLength = sizeGuess;
+		//status.narrowLength = sizeGuess;
 		progress.update(status);
 
 		if (!target.exists())

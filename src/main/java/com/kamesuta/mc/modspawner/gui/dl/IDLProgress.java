@@ -1,6 +1,6 @@
 package com.kamesuta.mc.modspawner.gui.dl;
 
-import com.kamesuta.mc.modspawner.download.Status;
+import com.kamesuta.mc.modspawner.download.status.Status;
 
 /**
  * ダウンロード進行をコントロールします
