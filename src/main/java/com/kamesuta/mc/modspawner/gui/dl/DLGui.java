@@ -154,7 +154,7 @@ public class DLGui extends JPanel implements ActionListener, IDLProgress {
 //		progressNarrow.setString(status.getNarrowMessage());
 
 		progressWide.setIndeterminate(!(status.max > 0));
-		progressWide.setValue(status.getStatus());
+		progressWide.setValue(status.getStatusPercent());
 		progressWide.setString(status.getMessageStatus());
 
 		updateSize += status.updateSize;

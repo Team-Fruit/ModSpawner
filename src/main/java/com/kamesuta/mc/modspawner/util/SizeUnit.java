@@ -30,19 +30,19 @@ public enum SizeUnit {
 
 	/**
 	 * サイズを単位を付けてフォーマットします。
-	 * @param speed サイズ
+	 * @param size サイズ
 	 * @param digit 小数桁数
 	 * @return フォーマット済み文字列
 	 */
-	public String getFormatSizeString(double speed, int digit) {
+	public String getFormatSizeString(double size, int digit) {
 		int index = 0;
 
-		while (speed >= pow) {
-			speed /= pow;
+		while (size >= pow) {
+			size /= pow;
 			index++;
 		}
 
-		return String.format(("%."+Integer.toString(digit)+"f%s%s"), speed, (index < suffix.length ? suffix[index] : "-"), unit);
+		return String.format(("%."+Integer.toString(digit)+"f%s%s"), size, (index < suffix.length ? suffix[index] : "-"), unit);
 	}
 
 	/**

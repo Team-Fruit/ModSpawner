@@ -1,5 +1,7 @@
 package com.kamesuta.mc.modspawner.download.status;
 
+import com.kamesuta.mc.modspawner.util.SizeUnit;
+
 /**
  * コンテンツダウンロード進行状況を管理します
  * @author Kamesuta
@@ -20,8 +22,44 @@ public class ContentStatus implements IStatus {
 	 */
 	public long max;
 
+	public ContentStatus() {
+	}
+
+	public ContentStatus(long max) {
+		this.max = max;
+	}
+
+	public ContentStatus(long max, String statusmessage) {
+		this.max = max;
+		this.statusmessage = statusmessage;
+	}
+
+	public String getStatusmessage() {
+		return statusmessage;
+	}
+
+	public void setStatusmessage(String statusmessage) {
+		this.statusmessage = statusmessage;
+	}
+
+	public long getMax() {
+		return max;
+	}
+
+	public void setMax(long max) {
+		this.max = max;
+	}
+
+	public long getStatus() {
+		return status;
+	}
+
+	public void setStatus(long status) {
+		this.status = status;
+	}
+
 	@Override
-	public int getStatus(int precision)
+	public int getStatusPercent(int precision)
 	{
 		if (max > 0)
 			return (int) (status * precision / max);
@@ -30,14 +68,20 @@ public class ContentStatus implements IStatus {
 	}
 
 	@Override
-	public int getStatus()
+	public int getStatusPercent()
 	{
-		return getStatus(PRECISION);
+		return getStatusPercent(PRECISION);
+	}
+
+	@Override
+	public String getStatusString()
+	{
+		return SizeUnit.STORAGE.getFormatSizeString(status, 0) + " / " + SizeUnit.STORAGE.getFormatSizeString(max, 0);
 	}
 
 	@Override
 	public String getMessageStatus()
 	{
-		return statusmessage + " - " + String.valueOf(getStatus(100)) + "%";
+		return statusmessage + " - " + getStatusString();
 	}
 }

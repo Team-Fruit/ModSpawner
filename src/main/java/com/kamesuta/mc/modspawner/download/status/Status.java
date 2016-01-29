@@ -30,17 +30,43 @@ public class Status implements IStatus {
 	 * バーメッセージ
 	 */
 	public String message = DEFAULT_MESSAGE;
+
 	/**
 	 * バー進行度
 	 */
 	public long status;
+
 	/**
 	 * バー長さ
 	 */
 	public long max;
 
+	public String getStatusmessage() {
+		return statusmessage;
+	}
+
+	public void setStatusmessage(String statusmessage) {
+		this.statusmessage = statusmessage;
+	}
+
+	public long getMax() {
+		return max;
+	}
+
+	public void setMax(long max) {
+		this.max = max;
+	}
+
+	public long getStatus() {
+		return status;
+	}
+
+	public void setStatus(long status) {
+		this.status = status;
+	}
+
 	@Override
-	public int getStatus(int precision)
+	public int getStatusPercent(int precision)
 	{
 		if (max > 0)
 			return (int) (status * precision / max);
@@ -48,13 +74,19 @@ public class Status implements IStatus {
 			return 0;
 	}
 
-	public int getStatus()
+	public int getStatusPercent()
 	{
-		return getStatus(PRECISION);
+		return getStatusPercent(PRECISION);
+	}
+
+	@Override
+	public String getStatusString()
+	{
+		return String.valueOf(getStatusPercent(100)) + "%";
 	}
 
 	public String getMessageStatus()
 	{
-		return message + " - " + String.valueOf(getStatus(100)) + "%";
+		return message + " - " + String.valueOf(getStatusPercent(100)) + "%";
 	}
 }
